@@ -1,0 +1,17 @@
+-- Remove Number from String
+DECLARE @table TABLE (value VARCHAR(MAX))
+INSERT INTO @table (value) VALUES
+('1168 - ABCD Street'),
+('1256 - EFGH Street'),
+('Street1 - 1234'),
+('Tenth - 45565'),
+('Woods'),
+('Minneapolis')
+
+SELECT * FROM @table
+
+SELECT CASE WHEN CHARINDEX('-',value) = 0 THEN value 
+		ELSE CASE WHEN ISNUMERIC(SUBSTRING(value,1,CHARINDEX('-',value)-1))=0 THEN SUBSTRING(value,1,CHARINDEX('-',value)-1)
+		ELSE RIGHT(value,LEN(value)-CHARINDEX('-',value))
+		END END
+FROM @table
